@@ -4,7 +4,7 @@
 
 ##demo
 
-[online-demo](https://cdn.rawgit.com/bajian/vue-tab/master/dist/demo3.html)
+[online-demo](https://cdn.rawgit.com/bajian/vue-tab/master/dist/demo4.html)
 
 ## Build Setup
 
@@ -18,14 +18,6 @@ npm run dev
 # build for production with minification
 npm run build
 
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
 ```
 
 ```html

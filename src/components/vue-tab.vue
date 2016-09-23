@@ -52,8 +52,10 @@
                 translateX: 0,
                 startTranslateX: 0,
                 delta: 0,
+                deltaY: 0,
                 dragging: false,
                 startPos: null,
+                startPosY: null,
                 transitioning: false,
                 slideEls:[]
             };
@@ -100,6 +102,7 @@
             },
             _onTouchStart(e) {
                 this.startPos = this._getTouchPos(e);
+                this.startYPos = this._getTouchYPos(e);
                 this.delta = 0;
                 this.startTranslateX = this.translateX;
                 this.startTime = new Date().getTime();
@@ -112,21 +115,22 @@
             },
             _onTouchMove(e) {
                 this.delta = this._getTouchPos(e) - this.startPos;
+                this.deltaY = Math.abs(this._getTouchYPos(e) - this.startPos);
                 if (!this.performanceMode) {
                     this.translateX = this.startTranslateX + this.delta;
                     this.$emit('slider-move', this.translateX);
                 }
 
-                if (Math.abs(this.delta) > 20) {//judge to allow/prevent scroll
+                if (Math.abs(this.delta) > 20 && this.deltaY<25) {//judge to allow/prevent scroll
                     e.preventDefault();
                 }
             },
             _onTouchEnd(e) {
                 this.dragging = false;
                 var isQuickAction = new Date().getTime() - this.startTime < 1000;
-                if (this.delta < -100 || (isQuickAction && this.delta < -15)) {
+                if (this.delta < -100 || (isQuickAction && this.delta < -15 && this.deltaY<30)) {
                     this.next();
-                } else if (this.delta > 100 || (isQuickAction && this.delta > 15)) {
+                } else if (this.delta > 100 || (isQuickAction && this.delta > 15 && this.deltaY<30)) {
                     this.prev();
                 } else {
                     this._revert();
@@ -142,6 +146,10 @@
             },
             _getTouchPos(e) {
                 var key = 'pageX' ;
+                return e.changedTouches ? e.changedTouches[0][key] : e[key];
+            },
+            _getTouchYPos(e) {
+                var key = 'pageY' ;
                 return e.changedTouches ? e.changedTouches[0][key] : e[key];
             },
             _onTransitionStart() {

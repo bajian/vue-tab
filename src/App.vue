@@ -11,6 +11,10 @@
       <div>hahaha1</div>
       <div>hahaha1</div>
       <div>hahaha1</div>
+      <img src="http://i2.hdslb.com/bfs/archive/33a164cec9e4664675e928c5f0a2844788c077ad.jpg@320w_200h.webp">
+      <div>hahaha1</div>
+      <div>hahaha1</div>
+      <img src="http://i2.hdslb.com/bfs/archive/33a164cec9e4664675e928c5f0a2844788c077ad.jpg@320w_200h.webp">
     </div>
     <div class="tab-content-container">
       bajian2
@@ -28,7 +32,7 @@
   <b>disable slide:</b>
   <br>
 
-  <tab :tabtitles="tabtitles"
+  <tab :tabtitles="tabtitles2"
   :slideable="false">
   <div style="height: 200px;background-color: green" class="tab-content-container">
     hahaha1
@@ -43,9 +47,6 @@
   <div class="tab-content-container">
     bajian3
   </div>
-  <div class="tab-content-container">
-    bajian4
-  </div>
 </tab>
 </div>
 </template>
@@ -59,7 +60,8 @@
     },
     data(){
       return {
-        'tabtitles':['bajian','github','bajian','github']
+        'tabtitles':['bajian','github','bajian','github'],
+        'tabtitles2':['bajian','github','bajian'],
       }
     }
   }

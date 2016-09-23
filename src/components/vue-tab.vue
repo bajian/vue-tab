@@ -117,7 +117,7 @@
                     this.$emit('slider-move', this.translateX);
                 }
 
-                if (Math.abs(this.delta) > 0) {
+                if (Math.abs(this.delta) > 20) {//judge to allow/prevent scroll
                     e.preventDefault();
                 }
             },
@@ -209,6 +209,7 @@
     text-align: center;
     box-sizing: border-box;
     cursor: pointer;
+    outline-style: none;
 }
 .tab-title.active,.tab-title:active {
     border-bottom: 2px solid #36acf4;

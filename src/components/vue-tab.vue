@@ -127,9 +127,6 @@
             },
             _onTouchEnd(e) {
                 this.dragging = false;
-                console.log('y='+this.deltaY);
-                console.log('x='+this.delta);
-                console.log('y/X='+this.deltaY/this.delta);
                 var isQuickAction = new Date().getTime() - this.startTime < 1000;
                 if (this.delta < -100 || (isQuickAction && this.delta < -15 && this.deltaY/this.delta>-6)) {
                     this.next();

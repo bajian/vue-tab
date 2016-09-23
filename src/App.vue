@@ -2,44 +2,52 @@
   <div id="app">
     <tab :tabtitles="tabtitles" 
     :current-page="3">
-      <div class="tab-content-container">
-        <div>hahaha1</div>
-        <img src="http://i2.hdslb.com/bfs/archive/33a164cec9e4664675e928c5f0a2844788c077ad.jpg@320w_200h.webp">
-        <div>hahaha1</div><div>hahaha1</div>
-        <img src="http://i2.hdslb.com/bfs/archive/33a164cec9e4664675e928c5f0a2844788c077ad.jpg@320w_200h.webp">
-      </div>
-      <div class="tab-content-container">
-        bajian2
-      </div>
-      <div class="tab-content-container">
-        bajian3
-      </div>
-      <div class="tab-content-container">
-        bajian4
-      </div>
-    </tab>
+    <div class="tab-content-container">
+      <button onclick="alert(2)">click</button>
+      <div>hahaha1</div>
+      <div>hahaha1</div>
+      <div>hahaha1</div>
+      <div>hahaha1</div>
+      <div>hahaha1</div>
+      <div>hahaha1</div>
+      <div>hahaha1</div>
+    </div>
+    <div class="tab-content-container">
+      bajian2
+    </div>
+    <div class="tab-content-container">
+      bajian3
+    </div>
+    <div class="tab-content-container">
+      bajian4
+    </div>
+  </tab>
 
-    <br>
-    <div>allow different height、verticle scroll</div>
-    <div>disable slide:</div>
-    <br>
+  <br>
+  <div>allow different height、verticle scroll</div>
+  <b>disable slide:</b>
+  <br>
 
-    <tab :tabtitles="tabtitles"
-     :slideable="false">
-      <div style="height: 50px;background-color: green" class="tab-content-container">
-        hahaha1
-      </div>
-      <div style="height: 150px;background-color: #999" class="tab-content-container">
-        bajian2
-      </div>
-      <div class="tab-content-container">
-        bajian3
-      </div>
-      <div class="tab-content-container">
-        bajian4
-      </div>
-    </tab>
+  <tab :tabtitles="tabtitles"
+  :slideable="false">
+  <div style="height: 200px;background-color: green" class="tab-content-container">
+    hahaha1
+    <img src="http://i2.hdslb.com/bfs/archive/33a164cec9e4664675e928c5f0a2844788c077ad.jpg@320w_200h.webp">
+    <div>hahaha1</div>
+    <div>hahaha1</div>
+    <img src="http://i2.hdslb.com/bfs/archive/33a164cec9e4664675e928c5f0a2844788c077ad.jpg@320w_200h.webp">
   </div>
+  <div style="height: 150px;background-color: #999" class="tab-content-container">
+    bajian2
+  </div>
+  <div class="tab-content-container">
+    bajian3
+  </div>
+  <div class="tab-content-container">
+    bajian4
+  </div>
+</tab>
+</div>
 </template>
 
 <script>

@@ -9,6 +9,7 @@
     <!-- decide if bind touchstart -->
     <div v-if="slideable"
     class="swiper"
+    :class="{'invisible':invisible}"
     @touchstart="_onTouchStart">
         <div class="swiper-wrap"
         v-el:swiper-wrap
@@ -18,7 +19,8 @@
             <slot></slot>
         </div>
     </div> 
-    <div v-else class="swiper">
+    <div v-else class="swiper"
+    :class="{'invisible':invisible}">
         <div class="swiper-wrap"
         v-el:swiper-wrap
         :class="{'dragging': dragging}"
@@ -57,7 +59,8 @@
                 startPos: null,
                 startPosY: null,
                 transitioning: false,
-                slideEls:[]
+                slideEls:[],
+                invisible:true,
             };
         },
         ready() {
@@ -68,8 +71,8 @@
             this.setPage(this.currentPage);
             let _this=this;
             setTimeout(()=>{
-                _this.dragging=false;
-            },0)
+                _this.dragging=_this.invisible=false;
+            },100)
         },
         methods: {
             next() {
@@ -176,6 +179,10 @@
 </script>
 
 <style type="text/css">
+
+    .invisible{
+        visibility:hidden;
+    }
     .swiper {
       position: relative;
       overflow: hidden;
@@ -207,17 +214,20 @@
     margin: 0 auto;
     list-style: none;
     border-bottom: 1px solid #dddddd;
+    display: -webkit-flex;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
 }
 .tab-title{
     height: 35px;
     line-height: 35px;
     position: relative;
-    display: table-cell;
-    width: 1%;
     text-align: center;
-    box-sizing: border-box;
     cursor: pointer;
     outline-style: none;
+    flex: 1;
 }
 .tab-title.active,.tab-title:active {
     border-bottom: 2px solid #36acf4;

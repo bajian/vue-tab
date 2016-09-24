@@ -95,6 +95,7 @@
     color: #2c3e50;
     margin-top: 50px;
     max-width: 500px;
+    width: 100%;
     font-family: Source Sans Pro, Helvetica, sans-serif;
     text-align: center;
   }

@@ -53,11 +53,10 @@ npm run build
 ### Events
 | Name                            | Parameters | Description                                                                                                                                                  |
 |--------------------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| slide-change-start | `pageNumber`     | Fire in the beginning of animation to other slide (next or previous).                                                                                        |
-| slide-change-end   | `pageNumber`     | Will be fired after animation to other slide (next or previous).                                                                                             |
-| slide-revert-start | `pageNumber`     | Fire in the beginning of animation to revert slide (no change).                                                                                              |
-| slide-revert-end   | `pageNumber`     | Will be fired after animation to revert slide (no change).                                                                                                   |
-| slider-move        | `offset`         | Callback function, will be executed when user touch and move finger over page and move it. Receives swiper instance and 'touchmove' event as an arguments. |
+| tab-change-start | `pageNumber`     | Fire in the beginning of animation to other slide (next or previous).                                                                                        |
+| tab-change-end   | `pageNumber`     | Will be fired after animation to other slide (next or previous).                                                                                             |
+| tab-revert-start | `pageNumber`     | Fire in the beginning of animation to revert slide (no change).                                                                                              |
+| tab-revert-end   | `pageNumber`     | Will be fired after animation to revert slide (no change).                                                                                                   |
 | ================== | ================ | ============================ |
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

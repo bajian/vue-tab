@@ -8,21 +8,21 @@
     </div>
     <!-- decide if bind touchstart -->
     <div v-if="slideable"
-    class="swiper"
+    class="tabswiper"
     :class="{'invisible':invisible}"
     @touchstart="_onTouchStart">
-        <div class="swiper-wrap"
-        v-el:swiper-wrap
+        <div class="tabswiper-wrap"
+        v-el:tabswiper-wrap
         :class="{'dragging': dragging}"
         :style="{'transform' : 'translate3d(' + translateX + 'px,0, 0)'}"
         @transitionend="_onTransitionEnd">
             <slot></slot>
         </div>
     </div> 
-    <div v-else class="swiper"
+    <div v-else class="tabswiper"
     :class="{'invisible':invisible}">
-        <div class="swiper-wrap"
-        v-el:swiper-wrap
+        <div class="tabswiper-wrap"
+        v-el:tabswiper-wrap
         :class="{'dragging': dragging}"
         :style="{'transform' : 'translate3d(' + translateX + 'px,0, 0)'}"
         @transitionend="_onTransitionEnd">
@@ -66,7 +66,7 @@
         ready() {
             this._onTouchMove = this._onTouchMove.bind(this);
             this._onTouchEnd = this._onTouchEnd.bind(this);
-            this.slideEls = this.$els.swiperWrap.children;
+            this.slideEls = this.$els.tabswiperWrap.children;
             this.dragging=true;
             this.setPage(this.currentPage);
             let _this=this;
@@ -113,15 +113,13 @@
 
                 document.addEventListener('touchmove', this._onTouchMove, false);
                 document.addEventListener('touchend', this._onTouchEnd, false);
-                document.addEventListener('mousemove', this._onTouchMove, false);
-                document.addEventListener('mouseup', this._onTouchEnd, false);
             },
             _onTouchMove(e) {
                 this.delta = this._getTouchPos(e) - this.startPos;
                 this.deltaY = Math.abs(this._getTouchYPos(e) - this.startPos);
                 if (!this.performanceMode) {
                     this.translateX = this.startTranslateX + this.delta;
-                    this.$emit('slider-move', this.translateX);
+                    // this.$emit('slider-move', this.translateX);
                 }
 
                 if (Math.abs(this.delta) > 20 && this.deltaY<25) {//judge to allow/prevent scroll
@@ -141,8 +139,6 @@
 
                 document.removeEventListener('touchmove', this._onTouchMove);
                 document.removeEventListener('touchend', this._onTouchEnd);
-                document.removeEventListener('mousemove', this._onTouchMove);
-                document.removeEventListener('mouseup', this._onTouchEnd);
             },
             _revert() {
                 this.setPage(this.currentPage);
@@ -158,17 +154,19 @@
             _onTransitionStart() {
                 this.transitioning = true;
                 if (this._isPageChanged()) {
-                    this.$emit('slide-change-start', this.currentPage);
+                    this.$emit('tab-change-start', this.currentPage);
                 } else {
-                    this.$emit('slide-revert-start', this.currentPage);
+                    this.$emit('tab-revert-start', this.currentPage);
                 }
             },
-            _onTransitionEnd() {
+            _onTransitionEnd(e) {
+                e.stopPropagation()
+                if(e.target.className!='tabswiper-wrap') return;
                 this.transitioning= false;
                 if (this._isPageChanged()) {
-                    this.$emit('slide-change-end', this.currentPage);
+                    this.$emit('tab-change-end', this.currentPage);
                 } else {
-                    this.$emit('slide-revert-end', this.currentPage);
+                    this.$emit('tab-revert-end', this.currentPage);
                 }
             },
             _isPageChanged() {
@@ -183,19 +181,19 @@
     .invisible{
         visibility:hidden;
     }
-    .swiper {
+    .tabswiper {
       position: relative;
       overflow: hidden;
   }
-  .swiper-wrap {
+  .tabswiper-wrap {
     display: flex;
     transition: all 0.4s ease;
     flex-direction: row;
 }
- .swiper-wrap.dragging{
+ .tabswiper-wrap.dragging{
     transition: none;
 }
-.swiper-wrap> div {
+.tabswiper-wrap> div {
   overflow-x:hidden; 
   flex-shrink: 0;
   width: 100%;

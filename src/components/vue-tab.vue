@@ -11,27 +11,31 @@
     class="tabswiper"
     :class="{'invisible':invisible}"
     @touchstart="_onTouchStart">
-        <div class="tabswiper-wrap"
-        v-el:tabswiper-wrap
-        :class="{'dragging': dragging}"
-        :style="{'transform' : 'translate3d(' + translateX + 'px,0, 0)'}"
-        @transitionend="_onTransitionEnd">
-            <slot></slot>
-        </div>
-    </div> 
-    <div v-else class="tabswiper"
-    :class="{'invisible':invisible}">
-        <div class="tabswiper-wrap"
-        v-el:tabswiper-wrap
-        :class="{'dragging': dragging}"
-        :style="{'transform' : 'translate3d(' + translateX + 'px,0, 0)'}"
-        @transitionend="_onTransitionEnd">
-            <slot></slot>
-        </div>
-    </div> 
+    <div class="tabswiper-wrap"
+    v-el:tabswiper-wrap
+    :class="{'dragging': dragging}"
+    :style="{'transform' : 'translate3d(' + translateX + 'px,0, 0)'}"
+    @transitionend="_onTransitionEnd">
+    <slot></slot>
+</div>
+</div> 
+<div v-else class="tabswiper"
+:class="{'invisible':invisible}">
+<div class="tabswiper-wrap"
+v-el:tabswiper-wrap
+:class="{'dragging': dragging}"
+:style="{'transform' : 'translate3d(' + translateX + 'px,0, 0)'}"
+@transitionend="_onTransitionEnd">
+<slot></slot>
+</div>
+</div> 
 </template>
 
 <script type="text/babel">
+
+    const JUDGE_INITIAL=0
+    const JUDGE_SLIDEING=1
+    const JUDGE_SCROLLING=2
 
     export default {
         props: {
@@ -61,6 +65,7 @@
                 transitioning: false,
                 slideEls:[],
                 invisible:true,
+                judge:JUDGE_INITIAL,
             };
         },
         ready() {
@@ -116,27 +121,46 @@
             },
             _onTouchMove(e) {
                 this.delta = this._getTouchPos(e) - this.startPos;
-                this.deltaY = Math.abs(this._getTouchYPos(e) - this.startPos);
-                if (!this.performanceMode) {
-                    this.translateX = this.startTranslateX + this.delta;
-                    // this.$emit('slider-move', this.translateX);
-                }
+                this.deltaY = Math.abs(this._getTouchYPos(e) - this.startYPos);
 
-                if (Math.abs(this.delta) > 20 && this.deltaY<25) {//judge to allow/prevent scroll
-                    e.preventDefault();
+
+                switch (this.judge) {
+                    case JUDGE_INITIAL:
+                    // if (Math.abs(this.delta) > 20 && this.deltaY<25) {//judge to allow/prevent scroll
+                    if (Math.abs(this.delta) / this.deltaY>1.5) {//judge to allow/prevent scroll
+                        this.judge=JUDGE_SLIDEING
+                        e.preventDefault();
+                        e.stopPropagation()
+                    }else{
+                        this.judge=JUDGE_SCROLLING
+                    }
+                    break;
+                    case JUDGE_SCROLLING:
+
+                    break;
+                    case JUDGE_SLIDEING:
+                    this.translateX = this.startTranslateX + this.delta;
+                    break;
+                    
+                    default:
+
+                    break;
                 }
+                
             },
             _onTouchEnd(e) {
-                this.dragging = false;
-                var isQuickAction = new Date().getTime() - this.startTime < 1000;
-                if (this.delta < -100 || (isQuickAction && this.delta < -15 && this.deltaY/this.delta>-6)) {
-                    this.next();
-                } else if (this.delta > 100 || (isQuickAction && this.delta > 15 && this.deltaY/this.delta<6)) {
-                    this.prev();
-                } else {
-                    this._revert();
+                if (this.judge==JUDGE_SLIDEING) {
+                    this.dragging = false;
+                    var isQuickAction = new Date().getTime() - this.startTime < 1000;
+                    if (this.delta < -100 || (isQuickAction && this.delta < -15 && this.deltaY/this.delta>-6)) {
+                        this.next();
+                    } else if (this.delta > 100 || (isQuickAction && this.delta > 15 && this.deltaY/this.delta<6)) {
+                        this.prev();
+                    } else {
+                        this._revert();
+                    }
                 }
-
+                this.judge=JUDGE_INITIAL
                 document.removeEventListener('touchmove', this._onTouchMove);
                 document.removeEventListener('touchend', this._onTouchEnd);
             },
@@ -190,7 +214,7 @@
     transition: all 0.4s ease;
     flex-direction: row;
 }
- .tabswiper-wrap.dragging{
+.tabswiper-wrap.dragging{
     transition: none;
 }
 .tabswiper-wrap> div {

@@ -4,7 +4,7 @@
 
 ##demo
 
-[online-demo](https://rawgit.com/bajian/vue-tab/master/dist/demo5.html)
+[online-demo](https://rawgit.com/bajian/vue-tab/master/dist/demo6.html)
 
 ## Build Setup
 

@@ -89,7 +89,6 @@
     width: 99%;
     height: 200px;
     margin: 0px auto;
-    /*background-color: #999;*/
   }
 
   #app {

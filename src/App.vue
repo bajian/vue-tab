@@ -28,8 +28,9 @@
   </tab>
 
   <br>
+  <br>
   <div>allow different height、verticle scroll</div>
-  <b>disable slide:</b>
+  <b>disable slide below:</b>
   <br>
 
   <tab :tabtitles="tabtitles2"
@@ -98,6 +99,7 @@
     width: 100%;
     font-family: Source Sans Pro, Helvetica, sans-serif;
     text-align: center;
+    margin: 0 auto
   }
 
 

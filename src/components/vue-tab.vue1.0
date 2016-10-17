@@ -1,36 +1,34 @@
 <template>
-    <div>
-        <div class="tab-title-container">
-            <li class="tab-title"
-            v-for="(title,index) in tabtitles"
-            :class="{'active': index+1===currentPage}"
-            :key="index"
-            @click="setPage(index+1)">{{title}}</li>
-        </div>
-        <!-- decide if bind touchstart -->
-        <div v-if="slideable"
-        class="tabswiper"
-        :class="{'invisible':invisible}"
-        @touchstart="_onTouchStart">
-        <div class="tabswiper-wrap"
-        ref="tabswiper-wrap"
-        :class="{'dragging': dragging}"
-        :style="{'transform' : 'translate3d(' + translateX + 'px,0, 0)'}"
-        @transitionend="_onTransitionEnd">
-        <slot></slot>
+    <div class="tab-title-container">
+        <li class="tab-title"
+        v-for="title in tabtitles"
+        :class="{'active': $index+1===currentPage}"
+        track-by="$index"
+        @click="setPage($index+1)">{{title}}</li>
     </div>
+    <!-- decide if bind touchstart -->
+    <div v-if="slideable"
+    class="tabswiper"
+    :class="{'invisible':invisible}"
+    @touchstart="_onTouchStart">
+    <div class="tabswiper-wrap"
+    v-el:tabswiper-wrap
+    :class="{'dragging': dragging}"
+    :style="{'transform' : 'translate3d(' + translateX + 'px,0, 0)'}"
+    @transitionend="_onTransitionEnd">
+    <slot></slot>
+</div>
 </div> 
 <div v-else class="tabswiper"
 :class="{'invisible':invisible}">
 <div class="tabswiper-wrap"
-ref="tabswiper-wrap"
+v-el:tabswiper-wrap
 :class="{'dragging': dragging}"
 :style="{'transform' : 'translate3d(' + translateX + 'px,0, 0)'}"
 @transitionend="_onTransitionEnd">
 <slot></slot>
 </div>
 </div> 
-</div>
 </template>
 
 <script type="text/babel">
@@ -45,7 +43,7 @@ ref="tabswiper-wrap"
                 type: Array,
                 default: []
             },
-            curPage: {
+            currentPage: {
                 type: Number,
                 default: 1
             },
@@ -54,15 +52,9 @@ ref="tabswiper-wrap"
                 default: true
             }
         },
-        watch:{
-            curPage:()=>{
-                this.currentPage=this.curPage
-            }
-        },
         data() {
             return {
                 lastPage: 1,
-                currentPage:this.curPage,
                 translateX: 0,
                 startTranslateX: 0,
                 delta: 0,
@@ -76,18 +68,16 @@ ref="tabswiper-wrap"
                 judge:JUDGE_INITIAL,
             };
         },
-        mounted(){
-            this.$nextTick(function () {
-                this._onTouchMove = this._onTouchMove.bind(this);
-                this._onTouchEnd = this._onTouchEnd.bind(this);
-                this.slideEls = this.$refs['tabswiper-wrap'].children;
-                this.dragging=true;
-                this.setPage(this.currentPage);
-                let _this=this;
-                setTimeout(()=>{
-                    _this.dragging=_this.invisible=false;
-                },100)
-            })
+        ready() {
+            this._onTouchMove = this._onTouchMove.bind(this);
+            this._onTouchEnd = this._onTouchEnd.bind(this);
+            this.slideEls = this.$els.tabswiperWrap.children;
+            this.dragging=true;
+            this.setPage(this.currentPage);
+            let _this=this;
+            setTimeout(()=>{
+                _this.dragging=_this.invisible=false;
+            },100)
         },
         methods: {
             next() {
@@ -221,7 +211,7 @@ ref="tabswiper-wrap"
   }
   .tabswiper-wrap {
     display: flex;
-    transition: all 0.2s ease;
+    transition: all 0.4s ease;
     flex-direction: row;
 }
 .tabswiper-wrap.dragging{

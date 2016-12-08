@@ -34,7 +34,7 @@
   <br>
 
   <tab :tabtitles="tabtitles2"
-  :slideable="false">
+  :slidable="false">
   <div style="height: 200px;background-color: green" class="tab-content-container">
     hahaha1
     <img src="http://i2.hdslb.com/bfs/archive/33a164cec9e4664675e928c5f0a2844788c077ad.jpg@320w_200h.webp">

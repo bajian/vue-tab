@@ -45,7 +45,7 @@ npm run build
 |----------------------|-----------|--------------|--------------------------------------------------------------------|
 | tabtitles            | `Array`  | `[]` | vue data to set tab title.         |
 | current-page      | `Number` | `1`      | set the current active page start from 1. |
-| slideable      | `Boolean` | `true`      | set false to disable silde to change a page. |
+| slidable      | `Boolean` | `true`      | set false to disable silding to change a page. |
 | ==================== | ========= | ============ | =================== |
 
 >the length of tabtitles should match to the page number

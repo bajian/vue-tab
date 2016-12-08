@@ -7,7 +7,7 @@
         @click="setPage($index+1)">{{title}}</li>
     </div>
     <!-- decide if bind touchstart -->
-    <div v-if="slideable"
+    <div v-if="slidable"
     class="tabswiper"
     :class="{'invisible':invisible}"
     @touchstart="_onTouchStart">
@@ -47,7 +47,7 @@ v-el:tabswiper-wrap
                 type: Number,
                 default: 1
             },
-            slideable: {
+            slidable: {
                 type: Boolean,
                 default: true
             }

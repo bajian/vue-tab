@@ -1,43 +1,44 @@
 <template>
-<div class="tab-container">
+    <div class="tab-container">
         <ul class="tab-title-container">
             <li class="tab-title"
-            v-for="(title,index) in tabtitles"
-            :class="{'active': index+1===currentPage}"
-            :key="index"
-            @click="setPage(index+1)">{{title}}</li>
+                v-for="(title,index) in tabtitles"
+                :class="{'active': index+1===currentPage}"
+                :key="index"
+                @click="setPage(index+1)">{{title}}
+            </li>
         </ul>
         <!-- decide if bind touchstart -->
         <div v-if="slidable"
-        class="tabswiper"
-        :class="{'invisible':invisible}"
-        @touchstart="_onTouchStart">
-        <div class="tabswiper-wrap"
-        ref="tabswiper-wrap"
-        :class="{'dragging': dragging}"
-        :style="{'transform' : 'translate3d(' + translateX + 'px,0, 0)'}"
-        @transitionend="_onTransitionEnd">
-        <slot></slot>
+             class="tabswiper"
+             :class="{'invisible':invisible}"
+             @touchstart="_onTouchStart">
+            <div class="tabswiper-wrap"
+                 ref="tabswiper-wrap"
+                 :class="{'dragging': dragging}"
+                 :style="{'transform' : 'translate3d(' + translateX + 'px,0, 0)'}"
+                 @transitionend="_onTransitionEnd">
+                <slot></slot>
+            </div>
+        </div>
+        <div v-else class="tabswiper"
+             :class="{'invisible':invisible}">
+            <div class="tabswiper-wrap"
+                 ref="tabswiper-wrap"
+                 :class="{'dragging': dragging}"
+                 :style="{'transform' : 'translate3d(' + translateX + 'px,0, 0)'}"
+                 @transitionend="_onTransitionEnd">
+                <slot></slot>
+            </div>
+        </div>
     </div>
-</div> 
-<div v-else class="tabswiper"
-:class="{'invisible':invisible}">
-<div class="tabswiper-wrap"
-ref="tabswiper-wrap"
-:class="{'dragging': dragging}"
-:style="{'transform' : 'translate3d(' + translateX + 'px,0, 0)'}"
-@transitionend="_onTransitionEnd">
-<slot></slot>
-</div>
-</div> 
-</div>
 </template>
 
 <script type="text/babel">
 
-    const JUDGE_INITIAL=0
-    const JUDGE_SLIDEING=1
-    const JUDGE_SCROLLING=2
+    const JUDGE_INITIAL = 0
+    const JUDGE_SLIDEING = 1
+    const JUDGE_SCROLLING = 2
 
     export default {
         props: {
@@ -54,15 +55,15 @@ ref="tabswiper-wrap"
                 default: true
             }
         },
-        watch:{
-            curPage:()=>{
-                this.currentPage=this.curPage
+        watch: {
+            curPage: () => {
+                this.currentPage = this.curPage
             }
         },
         data() {
             return {
                 lastPage: 1,
-                currentPage:this.curPage,
+                currentPage: this.curPage,
                 translateX: 0,
                 startTranslateX: 0,
                 delta: 0,
@@ -71,9 +72,9 @@ ref="tabswiper-wrap"
                 startPos: null,
                 startPosY: null,
                 transitioning: false,
-                slideEls:[],
-                invisible:true,
-                judge:JUDGE_INITIAL,
+                slideEls: [],
+                invisible: true,
+                judge: JUDGE_INITIAL,
             };
         },
         mounted(){
@@ -81,12 +82,12 @@ ref="tabswiper-wrap"
                 this._onTouchMove = this._onTouchMove.bind(this);
                 this._onTouchEnd = this._onTouchEnd.bind(this);
                 this.slideEls = this.$refs['tabswiper-wrap'].children;
-                this.dragging=true;
+                this.dragging = true;
                 this.setPage(this.currentPage);
-                let _this=this;
-                setTimeout(()=>{
-                    _this.dragging=_this.invisible=false;
-                },100)
+                let _this = this;
+                setTimeout(() => {
+                    _this.dragging = _this.invisible = false;
+                }, 100)
             })
         },
         methods: {
@@ -113,9 +114,9 @@ ref="tabswiper-wrap"
                 this.currentPage = page;
 
                 this.translateX = -[].reduce.call(this.slideEls, function (total, el, i) {
-                //previousValue,currentValue,currentIndex
-                return i > page - 2 ? total : total + el['clientWidth'];
-            }, 0);
+                    //previousValue,currentValue,currentIndex
+                    return i > page - 2 ? total : total + el['clientWidth'];
+                }, 0);
                 this._onTransitionStart();
             },
             _onTouchStart(e) {
@@ -133,44 +134,43 @@ ref="tabswiper-wrap"
                 this.delta = this._getTouchPos(e) - this.startPos;
                 this.deltaY = Math.abs(this._getTouchYPos(e) - this.startYPos);
 
-
                 switch (this.judge) {
                     case JUDGE_INITIAL:
-                    // if (Math.abs(this.delta) > 20 && this.deltaY<25) {//judge to allow/prevent scroll
-                    if (Math.abs(this.delta) / this.deltaY>1.5) {//judge to allow/prevent scroll
-                        this.judge=JUDGE_SLIDEING
-                        e.preventDefault();
-                        e.stopPropagation()
-                    }else{
-                        this.judge=JUDGE_SCROLLING
-                    }
-                    break;
+                        // if (Math.abs(this.delta) > 20 && this.deltaY<25) {//judge to allow/prevent scroll
+                        if (Math.abs(this.delta) / this.deltaY > 1.5) {//judge to allow/prevent scroll
+                            this.judge = JUDGE_SLIDEING
+                            e.preventDefault();
+                            e.stopPropagation()
+                        } else {
+                            this.judge = JUDGE_SCROLLING
+                        }
+                        break;
                     case JUDGE_SCROLLING:
 
-                    break;
+                        break;
                     case JUDGE_SLIDEING:
-                    this.translateX = this.startTranslateX + this.delta;
-                    break;
-                    
+                        this.translateX = this.startTranslateX + this.delta;
+                        break;
+
                     default:
 
-                    break;
+                        break;
                 }
-                
+
             },
             _onTouchEnd(e) {
-                if (this.judge==JUDGE_SLIDEING) {
-                    this.dragging = false;
+                this.dragging = false;
+                if (this.judge == JUDGE_SLIDEING) {
                     var isQuickAction = new Date().getTime() - this.startTime < 1000;
-                    if (this.delta < -100 || (isQuickAction && this.delta < -15 && this.deltaY/this.delta>-6)) {
+                    if (this.delta < -100 || (isQuickAction && this.delta < -15 && this.deltaY / this.delta > -6)) {
                         this.next();
-                    } else if (this.delta > 100 || (isQuickAction && this.delta > 15 && this.deltaY/this.delta<6)) {
+                    } else if (this.delta > 100 || (isQuickAction && this.delta > 15 && this.deltaY / this.delta < 6)) {
                         this.prev();
                     } else {
                         this._revert();
                     }
                 }
-                this.judge=JUDGE_INITIAL
+                this.judge = JUDGE_INITIAL
                 document.removeEventListener('touchmove', this._onTouchMove);
                 document.removeEventListener('touchend', this._onTouchEnd);
             },
@@ -178,11 +178,11 @@ ref="tabswiper-wrap"
                 this.setPage(this.currentPage);
             },
             _getTouchPos(e) {
-                var key = 'pageX' ;
+                var key = 'pageX';
                 return e.changedTouches ? e.changedTouches[0][key] : e[key];
             },
             _getTouchYPos(e) {
-                var key = 'pageY' ;
+                var key = 'pageY';
                 return e.changedTouches ? e.changedTouches[0][key] : e[key];
             },
             _onTransitionStart() {
@@ -195,8 +195,8 @@ ref="tabswiper-wrap"
             },
             _onTransitionEnd(e) {
                 e.stopPropagation()
-                if(e.target.className!='tabswiper-wrap') return;
-                this.transitioning= false;
+                if (e.target.className != 'tabswiper-wrap') return;
+                this.transitioning = false;
                 if (this._isPageChanged()) {
                     this.$emit('tab-change-end', this.currentPage);
                 } else {
@@ -247,9 +247,16 @@ ref="tabswiper-wrap"
 
 .tab-title-container{
     position: relative;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
     /*display: table;*/
     margin: 0 auto;
     list-style: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    text-decoration: none;
+    -webkit-user-select: none;
+    outline: none;
     border-bottom: 1px solid #dddddd;
     display: -webkit-box;
     display: -moz-box;
@@ -260,13 +267,22 @@ ref="tabswiper-wrap"
     align-items: center;
     justify-content: center;
     width: 100%;
+    -webkit-appearance:none;
+    text-decoration: none;
 }
 .tab-title{
+    -webkit-appearance:none;
     height: 35px;
     line-height: 35px;
     position: relative;
     text-align: center;
     cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    text-decoration: none;
+    -webkit-user-select: none;
+    outline: none;
     outline-style: none;
     -webkit-box-flex: 1;
     -webkit-flex: 1;
@@ -278,4 +294,6 @@ ref="tabswiper-wrap"
     border-bottom: 2px solid #36acf4;
     color: #36acf4;
 }
+
+
 </style>

@@ -88,6 +88,9 @@
                 setTimeout(() => {
                     _this.dragging = _this.invisible = false;
                 }, 100)
+                window.onresize=()=>{
+                    _this.setPage(_this.currentPage)
+                }
             })
         },
         methods: {

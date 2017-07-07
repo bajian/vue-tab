@@ -1,10 +1,10 @@
 # vue-tab for Vue2.x
 ###a tab that can be silded to change pages and allow different height、verticle scroll
-> A project supports for Vue2.x . for Vue1.0 see the "vue-tab.vue1.0" file
+> A project supports for Vue2.x . for Vue1.0 see the "vue-tab.vue1.0" file [deprecated]
 
-##demo
+## demo
 
-[live-demo](https://rawgit.com/bajian/vue-tab/master/dist/demo8.html)
+[live-demo](https://rawgit.com/bajian/vue-tab/master/dist/demo9.html)
 
 ## Build Setup
 

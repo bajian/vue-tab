@@ -152,6 +152,8 @@
 
                         break;
                     case JUDGE_SLIDEING:
+                        e.preventDefault();
+                        e.stopPropagation()
                         this.translateX = this.startTranslateX + this.delta;
                         break;
 

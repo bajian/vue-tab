@@ -11,10 +11,9 @@
       <div>hahaha1</div>
       <div>hahaha1</div>
       <div>hahaha1</div>
-      <img src="http://i2.hdslb.com/bfs/archive/33a164cec9e4664675e928c5f0a2844788c077ad.jpg@320w_200h.webp">
+      <img src="./assets/logo.png">
       <div>hahaha1</div>
       <div>hahaha1</div>
-      <img src="http://i2.hdslb.com/bfs/archive/33a164cec9e4664675e928c5f0a2844788c077ad.jpg@320w_200h.webp">
     </div>
     <div class="tab-content-container">
       bajian2
@@ -29,26 +28,30 @@
 
   <br>
   <br>
-  <div>allow different height、verticle scroll</div>
-  <b>disable slide below:</b>
+  <br>
+  <br>
+  <div>allow different height、verticle scroll、<b>disable slide below:</b></div>
+  
   <br>
 
   <tab :tabtitles="tabtitles2"
   :slidable="false">
   <div style="height: 200px;background-color: green" class="tab-content-container">
     hahaha1
-    <img src="http://i2.hdslb.com/bfs/archive/33a164cec9e4664675e928c5f0a2844788c077ad.jpg@320w_200h.webp">
+    <img src="./assets/logo.png">
     <div>hahaha1</div>
     <div>hahaha1</div>
-    <img src="http://i2.hdslb.com/bfs/archive/33a164cec9e4664675e928c5f0a2844788c077ad.jpg@320w_200h.webp">
   </div>
-  <div style="height: 150px;background-color: #999" class="tab-content-container">
+  <div style="background-color: #999" class="tab-content-container">
     bajian2
   </div>
   <div class="tab-content-container">
     bajian3
   </div>
 </tab>
+
+  <br>
+  <br>
 </div>
 </template>
 
@@ -78,12 +81,12 @@
     padding: 0px;
   }
 
-  body {
+/*  body {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
-  }
+  }*/
 
   .tab-content-container{
     width: 99%;
@@ -97,8 +100,12 @@
     max-width: 500px;
     width: 100%;
     font-family: Source Sans Pro, Helvetica, sans-serif;
-    text-align: center;
+    /*text-align: center;*/
     margin: 0 auto
+  }
+
+  img{
+    width: 98%
   }
 
 

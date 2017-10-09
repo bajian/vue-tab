@@ -40,6 +40,50 @@
     const JUDGE_SLIDEING = 1
     const JUDGE_SCROLLING = 2
 
+
+    const replaceAll=(str,target,replace)=>{
+        var reg="/"+target+"/g";    //查找时忽略大小写
+        reg=eval(reg);
+        return str.replace(reg,replace)
+    }
+
+     /**
+     * 
+     * @author bajian
+     * @param  el 原生element
+     * @param  className 允许多个，空格隔开
+     * @return 
+     */
+    const addClass=(el,className)=>{
+        if (!className) 
+            return false;
+        className = className.trim('').replace(/\s+/, ' ').split(' ');
+        el.className += ' ' + className.join(' ');
+        return true;
+    };
+
+     /**
+     * 
+     * @author bajian
+     * @param  el 原生element
+     * @param  className 允许多个，空格隔开
+     * @return 
+     */
+    const removeClass=(el,className)=>{
+        if (!className) 
+            return false;
+        className = className.trim('').replace(/\s+/, ' ').split(' ');
+        var cls = ' ' + el.className + ' ';
+                className.forEach(function (item)
+                {
+                    item = ' ' + item;
+                    cls = replaceAll(cls,item, ' ');
+                });
+                el.className = cls.trim();
+        return true;
+    };
+
+
     export default {
         props: {
             tabtitles: {
@@ -194,6 +238,17 @@
                 this.transitioning = true;
                 if (this._isPageChanged()) {
                     this.$emit('tab-change-start', this.currentPage);
+                    //FIX:remove the height of the hidden tab-items
+                    [].forEach.call(this.slideEls,(item,index)=>{
+                        if (index== (this.currentPage-1)) {
+                            removeClass(item,'hide-height')
+                        }
+                        else {
+                            addClass(item,'hide-height')
+                        }
+
+
+                    })
                 } else {
                     this.$emit('tab-revert-start', this.currentPage);
                 }
@@ -243,6 +298,11 @@
   width: 100%;
   margin: 0px;
   padding: 0px;
+  height: inherit;
+}
+
+.tabswiper-wrap> .hide-height {
+  height: 0px;
 }
 
 ::-webkit-scrollbar  

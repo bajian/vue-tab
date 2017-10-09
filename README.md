@@ -59,4 +59,7 @@ npm run build
 | tab-revert-end   | `pageNumber`     | Will be fired after animation to revert slide (no change).                                                                                                   |
 | ================== | ================ | ============================ |
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+#### To set the page the same height (according to the biggest one) ,add the css: 
+```
+.tabswiper-wrap> div{ height: initial !important;}
+```

@@ -100,8 +100,8 @@
             }
         },
         watch: {
-            curPage: () => {
-                this.currentPage = this.curPage
+            curPage: function (val) {
+                this.setPage(val)
             }
         },
         data() {
